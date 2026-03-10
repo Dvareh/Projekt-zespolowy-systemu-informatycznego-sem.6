@@ -1,15 +1,17 @@
 # Aplikacja internetowa księgarni
-Aplikacja internetowa służąca do przeglądania i zamawiania książek online.
+    Aplikacja internetowa służąca do przeglądania i zamawiania książek online.
 
 ## Stos Technologii
-
-Frontend: Next.js + TypeScript
-Backend: Spring Boot
-Database: PostgreSQL
+    Frontend: Next.js + TypeScript
+  
+    Backend: Spring Boot
+  
+    Database: PostgreSQL
 
 ## Struktura Projektu
-backend/   – część backendowa aplikacji
-frontend/  – część frontendowa aplikacji
+    backend/ – część backendowa aplikacji
+  
+    frontend/ – część frontendowa aplikacji
 
 ## Sprint Plan
   ### Sprint 1 (Tydzień 1–2)
@@ -55,3 +57,11 @@ frontend/  – część frontendowa aplikacji
     Formularz rejestracji
     Integracja z API logowania i rejestracji
     Zapisywanie tokenu JWT
+
+
+
+
+## Autorzy
+  Artiom Prilepschi
+  
+  Nazar Pavlenko
