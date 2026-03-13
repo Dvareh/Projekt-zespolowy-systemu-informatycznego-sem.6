@@ -17,7 +17,7 @@ public class BookService{
     private static final Logger logger = LoggerFactory.getLogger(BookService.class);
 
 
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
@@ -40,18 +40,18 @@ public class BookService{
     }
 
     @Transactional
-    public Book updateBook(Integer id, Book updatedBook) {
-        Book existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Book not found with id " + id));
-        logger.info("Updating book with id {}", id);
-        existingBook.setTitle(updatedBook.getTitle());
-        existingBook.setAuthor(updatedBook.getAuthor());
-        existingBook.setDescription(updatedBook.getDescription());
-        existingBook.setPublicationYear(updatedBook.getPublicationYear());
-        existingBook.setPrice(updatedBook.getPrice());
-        existingBook.setGenre(updatedBook.getGenre());
+    public Optional<Book> updateBook(Integer id, Book updatedBook) {
+        return bookRepository.findById(id).map(existingBook -> {
+            logger.info("Updating book with id {}", id);
+            existingBook.setTitle(updatedBook.getTitle());
+            existingBook.setAuthor(updatedBook.getAuthor());
+            existingBook.setDescription(updatedBook.getDescription());
+            existingBook.setPublicationYear(updatedBook.getPublicationYear());
+            existingBook.setPrice(updatedBook.getPrice());
+            existingBook.setGenre(updatedBook.getGenre());
 
-        return bookRepository.save(existingBook);
+            return bookRepository.save(existingBook);
+        });
     }
 
     @Transactional
