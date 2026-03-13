@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +33,36 @@ public class BookService{
         return bookRepository.findById(id);
     }
 
+    @Transactional
     public Book addBook(Book book){
         logger.info("Adding book {}", book.getTitle());
         return bookRepository.save(book);
+    }
+
+    @Transactional
+    public Book updateBook(Integer id, Book updatedBook) {
+        Book existingBook = bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with id " + id));
+        logger.info("Updating book with id {}", id);
+        existingBook.setTitle(updatedBook.getTitle());
+        existingBook.setAuthor(updatedBook.getAuthor());
+        existingBook.setDescription(updatedBook.getDescription());
+        existingBook.setPublicationYear(updatedBook.getPublicationYear());
+        existingBook.setPrice(updatedBook.getPrice());
+        existingBook.setGenre(updatedBook.getGenre());
+
+        return bookRepository.save(existingBook);
+    }
+
+    @Transactional
+    public boolean deleteBook(Integer id) {
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+            logger.info("Deleted book with id {}", id);
+            return true;
+        }
+        logger.warn("Attempted to delete non-existing book with id {}", id);
+        return false;
     }
 
 }
